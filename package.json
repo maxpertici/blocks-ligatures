@@ -1,0 +1,13 @@
+{
+  "name": "blocks-ligatures",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "watch": "wp-scripts start src/app.js --output-path=dist --webpack-devtool=eval-source-map --mode=production",
+    "build": "wp-scripts build src/app.js --output-path=dist --webpack-devtool=eval-source-map --mode=production"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^25.3.0"
+  }
+}
