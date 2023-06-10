@@ -15,3 +15,8 @@ Copyright 219-2021 Block's Ligatures
 */
 
 defined( 'ABSPATH' ) or die();
+
+
+$loader = require __DIR__ . '/vendor/autoload.php';
+
+new \MXP\Core\Plugin();

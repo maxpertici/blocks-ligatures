@@ -1,0 +1,9 @@
+{
+  "name": "maxpertici/blocks-ligatures",
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "MXP\\": "src/"
+    }
+  }
+}
