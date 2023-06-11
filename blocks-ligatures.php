@@ -19,4 +19,5 @@ defined( 'ABSPATH' ) or die();
 
 $loader = require __DIR__ . '/vendor/autoload.php';
 
-new \MXP\Core\Plugin();
+$blocks_ligatures = new \MXP\Core\Plugin( __FILE__ );
+$blocks_ligatures->run();
