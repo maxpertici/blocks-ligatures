@@ -4,27 +4,30 @@ namespace MXP\Core;
 
 final class Plugin
 {
+	private $directoryPath = null ;
 
-	public $directory_path = null ;
+	function __construct( $mainPluginFilePath = null ){
 
-	function __construct( $file_path ){
-		$this->set_directory_path( $file_path ) ;
+		if( is_null( $mainPluginFilePath ) ){ return ; }
+
+		$this->set_directoryPath( $mainPluginFilePath ) ;
 	}
 
-	function set_directory_path( $file_path ){
-		$this->directory_path = trailingslashit( $file_path );
-	}
-
-	function run(){
+	public function init(){
 		$this->set_hooks();
 	}
 
-	function set_hooks(){
+	private function set_directoryPath( $mainPluginFilePath ){
+		$this->directoryPath = trailingslashit( $mainPluginFilePath );
+	}
+
+	private function set_hooks(){
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editor_assets' ] );
 	}
 
-	function editor_assets(){
-		wp_enqueue_script( 'blocks-ligatures' , plugin_dir_url( $this->directory_path ) . 'build/app.js',  array(), '0.1' );
-		wp_enqueue_style(  'blocks-ligatures' , plugin_dir_url( $this->directory_path ) . 'build/app.css', array(), '0.1', 'all' );
+	public function editor_assets(){
+		if( is_null( $this->directoryPath ) ){ return ; }
+		wp_enqueue_script( 'blocks-ligatures' , plugin_dir_url( $this->directoryPath ) . 'build/app.js',  array(), '0.1' );
+		wp_enqueue_style(  'blocks-ligatures' , plugin_dir_url( $this->directoryPath ) . 'build/app.css', array(), '0.1', 'all' );
 	}
 }
