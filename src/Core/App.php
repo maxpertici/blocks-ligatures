@@ -2,26 +2,22 @@
 
 namespace BlocksLigatures\Core;
 
-use \BlocksLigatures\Core\Plugin ;
-
-final class App extends Plugin{
+final class App extends Plugin {
 
 
-	public function __construct( $mainPluginFilePath )
-	{
+	public function __construct( $mainPluginFilePath ) {
 		parent::__construct( $mainPluginFilePath );
 	}
-	public function init(){
 
+	public function init() {
 		$this->setHooks();
 	}
 
-	private function setHooks(){
-
+	private function setHooks() {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
 	}
 
-	public function blockEditorAssets(){
+	public function blockEditorAssets() {
 
 		if( is_null( $this->pluginUrl ) ){ return ; }
 		wp_enqueue_script( 'blocks-ligatures' , $this->pluginUrl . 'build/app.js',  [], $this->version );
