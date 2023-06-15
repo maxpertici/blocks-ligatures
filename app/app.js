@@ -1,53 +1,16 @@
 
-import './styles/app.scss' ;
-
 import domReady from '@wordpress/dom-ready';
-import BlocksLigaturesManager from "./components/BlocksLigaturesManager.js";
+import App from "./Library/App/App";
 
-domReady( function () {
+domReady( async () => {
 
-	if( ! document.body.classList.contains( 'block-editor-page' ) ){ return ; }
+	let app = new App() ;
 
-	const { createHigherOrderComponent } =  wp.compose ;
+	const editorIsReady = await app.verifyEditorMarkups() ;
 
-	// const { subscribe, select } = wp.data ;
-
-	// - - - - - - - - - - - - - - - -
-	// on( BlockListBlock )
-
-	const withLigatureSupport = createHigherOrderComponent( ( BlockListBlock ) => {
-
-		// console.log( BlockListBlock );
-
-		return ( props ) => {
-
-
-			// - - - - - - - - - - - - - - - - -
-
-			// props.ligatures.functions.component = this ;
-
-			// console.log( props );
-
-			// const { blockLigature } = props.attributes ;
-			// let blockList = wp.data.select('core/block-editor').getBlocks() || [] ;
-
-			// - - -- - - -- - - -- - - - --  --
-
-			return <>
-						<BlockListBlock { ...props } />
-						<BlocksLigaturesManager />
-					</> ;
-		}
-
-	}, 'withLigatureSupport' );
-
-
-	wp.hooks.addFilter(
-
-		'editor.BlockListBlock',
-		'blocks-ligatures/with-ligature-support',
-		withLigatureSupport
-	);
-
+	if( editorIsReady ){
+		app.setupProperties();
+		app.addManager();
+	}
 
 } );
