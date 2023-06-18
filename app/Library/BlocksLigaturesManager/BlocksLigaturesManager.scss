@@ -1,6 +1,16 @@
+
 .blocks-ligatures-manager{
 
-  background-color: aqua;
+  display: none;
 
-  &--active{ background-color: red ; }
+  &--active{ display: grid; }
+  grid-auto-flow: column;
+
+  width: 120px;
+
+  position: absolute;
+  height: 100%;
+  left: 0;
+
+  background-color: #aaa;
 }

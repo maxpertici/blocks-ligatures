@@ -11,8 +11,6 @@ export default class BlocksLigaturesManager extends React.Component {
 
 	// https://www.educba.com/react-componentdidmount/
 	componentDidMount() {}
-
-
 	off(){
 		const { createHigherOrderComponent } =  wp.compose ;
 

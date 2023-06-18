@@ -12,6 +12,8 @@ export default class App {
 
 		this.toolBarElement      = document.querySelector('.edit-post-header-toolbar') ;
 		this.visualEditorElement = document.querySelector('.edit-post-visual-editor') ;
+
+		this.managerElement = document.getElementById('blocks-ligatures-manager') ;
 	}
 
 	verifyEditorMarkups(){
@@ -38,13 +40,16 @@ export default class App {
 
 	addButton(){
 
-		// TODO : remove jQuery
-		jQuery('.edit-post-header-toolbar').after( '<div class="">' + '<button class="blocks-ligatures-manager-toogler">Ligatures</button>' + '</div>' );
-		this.visualEditorElement.appendChild( document.querySelector('#blocks-ligatures-manager') );
+		const { __, _x, _n, _nx, sprintf } = wp.i18n ;
+		let toogler = document.createElement("button");
+		toogler.classList.add('blocks-ligatures-manager-toogler');
+		this.toolBarElement.after( toogler );
+		this.tooglerElement = document.querySelector('.blocks-ligatures-manager-toogler') ;
+		this.tooglerElement.innerHTML = __( 'Ligatures', 'blocks-ligatures' ) ;
 
-		let button = document.querySelector('.blocks-ligatures-manager-toogler') ;
+		this.visualEditorElement.appendChild( this.managerElement );
 
-		button.addEventListener('click', (e) => {
+		this.tooglerElement.addEventListener('click', (e) => {
 			e.preventDefault();
 			this.toggleManager();
 		} );
@@ -64,14 +69,14 @@ export default class App {
 
 
 	showManager(){
-		document.querySelector('#blocks-ligatures-manager').classList.add('blocks-ligatures-manager--active') ;
+		this.managerElement.classList.add('blocks-ligatures-manager--active') ;
 		this.isActive = true ;
 		this.localStorage.setItem('blocksLigatures/Manager/isActive', 'true' );
 
 	}
 
 	hideManager(){
-		document.querySelector('#blocks-ligatures-manager').classList.remove('blocks-ligatures-manager--active') ;
+		this.managerElement.classList.remove('blocks-ligatures-manager--active') ;
 		this.isActive = false ;
 		this.localStorage.setItem('blocksLigatures/Manager/isActive', 'false' );
 	}
