@@ -1,6 +1,8 @@
-const externals = {
+let externals = {
     wp: 'wp'
 };
+
+externals = {};
 
 const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';

@@ -4,13 +4,16 @@
   display: none;
 
   &--active{ display: grid; }
+
   grid-auto-flow: column;
 
   width: 120px;
 
   position: absolute;
   height: 100%;
+
   left: 0;
+  top: 0;
 
   background-color: #aaa;
 }

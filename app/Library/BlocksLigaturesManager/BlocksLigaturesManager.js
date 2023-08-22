@@ -2,63 +2,52 @@
 import './BlocksLigaturesManager.scss' ;
 
 import React from "react";
+import { dispatch, useDispatch } from '@wordpress/data';
+import { select, useSelect } from '@wordpress/data';
+import { findDOMNode } from 'react-dom';
+import DumbStore from '../DumbStore.js'
+
 export default class BlocksLigaturesManager extends React.Component {
 
 	constructor(props) {
-		super(props);
+		super( props );
+		this.state = {...props} ;
+		this.node = null ;
 	}
 
 
 	// https://www.educba.com/react-componentdidmount/
-	componentDidMount() {}
-	off(){
-		const { createHigherOrderComponent } =  wp.compose ;
+	componentDidMount() {
 
-		// const { subscribe, select } = wp.data ;
+		this.node = findDOMNode(this);
+		let store = new DumbStore() ;
+		store.setManagerNode( this.node ) ;
 
-		// - - - - - - - - - - - - - - - -
-		// on( BlockListBlock )
+		if( this.state.isActive ){
+			this.node.classList.add('blocks-ligatures-manager--active');
+		}
 
-		const withLigatureSupport = createHigherOrderComponent( ( BlockListBlock ) => {
-
-			// console.log( BlockListBlock );
-
-			return ( props ) => {
-
-
-				// - - - - - - - - - - - - - - - - -
-
-				// props.ligatures.functions.component = this ;
-
-				// console.log( props );
-
-				// const { blockLigature } = props.attributes ;
-				// let blockList = wp.data.select('core/block-editor').getBlocks() || [] ;
-
-				// - - -- - - -- - - -- - - - --  --
-
-				return <>
-					<BlockListBlock { ...props } />
-					<BlocksLigaturesManager />
-				</> ;
-			}
-
-		}, 'withLigatureSupport' );
-
-
-		wp.hooks.addFilter(
-
-			'editor.BlockListBlock',
-			'blocks-ligatures/with-ligature-support',
-			withLigatureSupport
-		);
 	}
+
 
 	render() {
 
+		// blocks-ligatures-manager--active ?
+		// console.log(this.state.isActive);
+
+		/*
+		const { preferences } = useSelect( ( select ) => {
+			return  wp.data.select( 'core/interface' ) ;
+		} );
+
+		console.log( preferences ) ;
+		*/
+
 		return(
 			<>
-				<strong>Blocks Ligatures Manager</strong>
+				<div id="blocks-ligatures-manager" className="blocks-ligatures-manager">
+					<strong>Blocks Ligatures Manager</strong>
+				</div>
 			</>
 		);
 

@@ -14,19 +14,13 @@ final class App extends Plugin {
 	}
 
 	private function setHooks() {
-		add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
-		add_action('admin_footer', [ $this, 'addBlocksLigaturesManagerMarkup' ]);
+		add_action( 'enqueue_block_assets', [ $this, 'blockEditorAssets' ] );
 	}
 
 	public function blockEditorAssets() {
 		if( is_null( $this->pluginUrl ) ){ return ; }
-		wp_enqueue_script( 'blocks-ligatures' , $this->pluginUrl . 'build/app.js',  [], $this->version );
-		wp_enqueue_style(  'blocks-ligatures' , $this->pluginUrl . 'build/app.css', [], $this->version, 'all' );
+		wp_enqueue_script( 'blocks-ligatures' , $this->pluginUrl . 'build/app.js',  [ 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-block-editor' ], $this->version );
+		wp_enqueue_style(  'blocks-ligatures' , $this->pluginUrl . 'build/app.css', [ 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-block-editor' ], $this->version, 'all' );
 	}
-
-	public function addBlocksLigaturesManagerMarkup() {
-		echo '<div id="blocks-ligatures-manager" class="blocks-ligatures-manager"></div>' ;
-	}
-
 
 }
