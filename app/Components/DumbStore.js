@@ -11,8 +11,17 @@ export default class DumbStore {
 		window.maxpertici.blocksLigatures.store.managerNode = node ;
 	}
 
+	setAppRootNode( node ){
+		window.maxpertici.blocksLigatures.store.appRootNode = node ;
+	}
+
 	getManagerNode(){
 		return window.maxpertici.blocksLigatures.store.managerNode  ;
 	}
+
+	getAppRootNode(){
+		return window.maxpertici.blocksLigatures.store.appRootNode ;
+	}
+
 
 }

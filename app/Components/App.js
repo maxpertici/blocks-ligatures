@@ -7,6 +7,7 @@ import BlocksLigaturesManager from "./BlocksLigaturesManager.js";
 import DumbStore from './DumbStore.js'
 
 import { dispatch } from '@wordpress/data';
+import { findDOMNode } from 'react-dom';
 import { store as interfaceStore } from '@wordpress/interface';
 
 export default class App {
@@ -15,7 +16,7 @@ export default class App {
 
 	setup(){
 
-		this.toolBarElement      = document.querySelector('.edit-post-header-toolbar') ;
+		this.toolBarElement = document.querySelector('.edit-post-header-toolbar') ;
 
 		this.isActive = false ;
 		this.dispatchManagerActivation() ;
@@ -115,16 +116,33 @@ export default class App {
 				let blocksCount = blockList.length ;
 				let lastBlock = blockList[ blocksCount - 1 ] ;
 
+
 				let isEnd = false ;
 				if( lastBlock.clientId === props.clientId ){
 					isEnd = true ;
 				}
 
+				let hasNode = false ;
+				let store = new DumbStore() ;
+				let appRootNode = store.getAppRootNode() ;
+
+				if( appRootNode !== undefined ){ hasNode = true ; }
+
+				// console.log( blockList );
+				// console.log( isEnd );
+				// console.log( appRootNode );
+
+				if( true  === hasNode ){
+					let manageIsActive = this.isManagerActiveFromCookie() ;
+					ReactDOM.render( <BlocksLigaturesManager isActive={manageIsActive} blockList={blockList} />, appRootNode ) ;
+				}
+
+
 				// - - -- - - -- - - -- - - - --  --
 
 				return <>
 					<BlockListBlock { ...props } />
-					{isEnd === true && <BlocksLigaturesManager isActive={this.isActive} blockList={blockList} />}
+					{isEnd === true && hasNode === false && <div id="blocks-ligatures-app"><BlocksLigaturesManager isActive={this.isActive} blockList={blockList} /></div>}
 				</> ;
 			}
 
