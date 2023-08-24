@@ -1,6 +1,6 @@
 
 import domReady from '@wordpress/dom-ready';
-import App from "./Library/App/App";
+import App from "./Components/App.js";
 
 domReady( async () => {
 
@@ -9,7 +9,7 @@ domReady( async () => {
 	const editorIsReady = await app.verifyEditorMarkups() ;
 
 	if( editorIsReady ){
-		app.setupProperties();
+		app.setup();
 		app.addManager();
 	}
 

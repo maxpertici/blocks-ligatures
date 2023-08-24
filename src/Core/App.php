@@ -20,7 +20,7 @@ final class App extends Plugin {
 	public function blockEditorAssets() {
 		if( is_null( $this->pluginUrl ) ){ return ; }
 		wp_enqueue_script( 'blocks-ligatures' , $this->pluginUrl . 'build/app.js',  [ 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-block-editor' ], $this->version );
-		wp_enqueue_style(  'blocks-ligatures' , $this->pluginUrl . 'build/app.css', [ 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-block-editor' ], $this->version, 'all' );
+		wp_enqueue_style(  'blocks-ligatures' , $this->pluginUrl . 'build/app.css', [ ], $this->version, 'all' );
 	}
 
 }

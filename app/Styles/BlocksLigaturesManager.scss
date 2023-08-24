@@ -1,3 +1,4 @@
+@import 'Colors.scss';
 
 .blocks-ligatures-manager{
 
@@ -15,5 +16,5 @@
   left: 0;
   top: 0;
 
-  background-color: #aaa;
+  background-color: var( --blocks-ligatures--color--gray-light );
 }

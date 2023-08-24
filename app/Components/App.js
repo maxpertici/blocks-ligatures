@@ -1,30 +1,23 @@
 
-import './App.scss' ;
+import '../Styles/App.scss' ;
 
-import BlocksLigaturesManager from "../BlocksLigaturesManager/BlocksLigaturesManager.js";
+import BlocksLigaturesManager from "./BlocksLigaturesManager.js";
 
-import { subscribe, select, useSelect } from '@wordpress/data';
-import { dispatch, useDispatch } from '@wordpress/data';
+// TODO : replace with gutenberg redux store
+import DumbStore from './DumbStore.js'
+
+import { dispatch } from '@wordpress/data';
 import { store as interfaceStore } from '@wordpress/interface';
-import DumbStore from '../DumbStore.js'
+
 export default class App {
 
-	constructor() {
+	constructor() {}
 
-		this.subscribe = subscribe ;
-		this.select = select ;
-	}
-
-	setupProperties(){
+	setup(){
 
 		this.toolBarElement      = document.querySelector('.edit-post-header-toolbar') ;
-		this.visualEditorElement = document.querySelector('.edit-post-visual-editor') ;
-
-		// this.managerElement = document.getElementById('blocks-ligatures-manager') ;
 
 		this.isActive = false ;
-		this.localStorage = window.localStorage ;
-
 		this.dispatchManagerActivation() ;
 	}
 
@@ -51,10 +44,10 @@ export default class App {
 		// save in cookie
 		let isManagerActive = wp.data.select( 'core/interface' ).isFeatureActive( 'maxpertici/blocksLigatures', 'isActive' ) ;
 		if( isManagerActive === true ){
-			this.localStorage.setItem('blocksLigatures/Manager/isActive', 'false' );
+			window.localStorage.setItem('blocksLigatures/Manager/isActive', 'false' );
 			managerNode.classList.remove('blocks-ligatures-manager--active');
 		}else{
-			this.localStorage.setItem('blocksLigatures/Manager/isActive', 'true' );
+			window.localStorage.setItem('blocksLigatures/Manager/isActive', 'true' );
 			managerNode.classList.add('blocks-ligatures-manager--active');
 		}
 	}
@@ -66,10 +59,9 @@ export default class App {
 
 			const { subscribe, select } = wp.data ;
 
-			const waitingEditor =subscribe( () => {
+			const waitingEditor = subscribe( () => {
 
 				let blockList = select('core/block-editor').getBlocks() ;
-
 				// console.log(blockList);
 
 				if( ( blockList.constructor === Array ) ){
@@ -86,7 +78,7 @@ export default class App {
 
 	addButton(){
 
-		const { __, _x, _n, _nx, sprintf } = wp.i18n ;
+		const { __ } = wp.i18n ;
 
 		let toogler = document.createElement("button");
 		toogler.classList.add('blocks-ligatures-manager-toogler');
@@ -103,9 +95,10 @@ export default class App {
 
 	addManager(){
 
+		// add button
 		this.addButton();
 
-		// add manager, launch component.
+		// add manager to BlockListBlock
 
 		const { createHigherOrderComponent } =  wp.compose ;
 
@@ -131,7 +124,7 @@ export default class App {
 
 				return <>
 					<BlockListBlock { ...props } />
-					{isEnd === true && <BlocksLigaturesManager isActive={this.isActive} />}
+					{isEnd === true && <BlocksLigaturesManager isActive={this.isActive} blockList={blockList} />}
 				</> ;
 			}
 
@@ -147,38 +140,15 @@ export default class App {
 		// - -
 	}
 
-
-	showManager(){
-
-		document.querySelector('.blocks-ligatures-manager').classList.add('blocks-ligatures-manager--active') ;
-		this.isActive = true ;
-		this.localStorage.setItem('blocksLigatures/Manager/isActive', 'true' );
-
-	}
-
-	hideManager(){
-
-		document.querySelector('.blocks-ligatures-manager').classList.remove('blocks-ligatures-manager--active') ;
-		this.isActive = false ;
-		this.localStorage.setItem('blocksLigatures/Manager/isActive', 'false' );
-	}
-
 	toggleManager(){
 
 		// console.log('toggleManager');
 		this.toggleManagerActivation()
 	}
 
-	CheckIsManagerIsSavedAsActive(){
-
-		if( 'true' === this.localStorage.getItem('blocksLigatures/Manager/isActive') ){
-			this.showManager();
-		}
-	}
-
 	isManagerActiveFromCookie(){
 
-		if( 'true' === this.localStorage.getItem('blocksLigatures/Manager/isActive') ){
+		if( 'true' === window.localStorage.getItem('blocksLigatures/Manager/isActive') ){
 			return true;
 		}
 
