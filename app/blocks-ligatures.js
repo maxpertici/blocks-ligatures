@@ -1,2 +1,1 @@
-import "./js/app.js";
-import "./sass/editor.scss" ;
+import "./js/main.js";
