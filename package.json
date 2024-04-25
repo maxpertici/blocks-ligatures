@@ -1,40 +1,14 @@
 {
   "name": "blocks-ligatures",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "@babel/preset-react": "^7.22.5",
-    "babel-loader": "^9.1.2",
-    "classnames": "^2.3.2",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.8.1",
-    "lodash.assign": "^4.2.0",
-    "mini-css-extract-plugin": "^2.7.6",
-    "moment": "^2.29.4",
-    "node-sass": "^9.0.0",
-    "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.63.6",
-    "sass-loader": "^13.3.2",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.4"
-  },
+  "license": "GPL-2.0-or-later",
   "scripts": {
-    "build": "NODE_ENV=production webpack",
-    "watch": "webpack --watch"
+    "watch": "wp-scripts start ./app/blocks-ligatures.js --webpack-copy-php --webpack-devtool=eval-source-map",
+    "build": "wp-scripts build ./app/blocks-ligatures.js --webpack-copy-php --mode=production"
   },
-  "dependencies": {
-    "@wordpress/data": "^9.10.0",
-    "@wordpress/dom-ready": "^3.35.0",
-    "@wordpress/interface": "^5.17.0",
-    "classnames": "^2.3.2",
-    "lodash.assign": "^4.2.0",
-    "moment": "^2.29.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+  "dependencies": {},
+  "devDependencies": {
+    "@wordpress/scripts": "^27.6.0"
   }
 }

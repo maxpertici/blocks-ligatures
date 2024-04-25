@@ -15,7 +15,9 @@ Text Domain:  blocks-ligatures
 
 defined( 'ABSPATH' ) or die();
 
+use MXP\BlocksLigatures\Core\App;
+
 $loader = require __DIR__ . '/vendor/autoload.php';
 
-$App = new \BlocksLigatures\Core\App( __FILE__ );
+$App = new App( __FILE__ );
 $App->init();

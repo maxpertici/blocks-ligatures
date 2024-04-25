@@ -3,7 +3,7 @@
   "require-dev": {},
   "autoload": {
     "psr-4": {
-      "BlocksLigatures\\": "src/"
+      "MXP\\BlocksLigatures\\": "MXP/"
     }
   }
 }
