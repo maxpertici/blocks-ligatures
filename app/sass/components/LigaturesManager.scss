@@ -1,0 +1,6 @@
+.ligatures-manager{
+    &:not(.ligatures-manager--is-active){
+        display: none;
+    }
+    background-color: aqua;
+}
