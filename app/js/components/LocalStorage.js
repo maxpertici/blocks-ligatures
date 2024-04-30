@@ -1,4 +1,5 @@
 export default class LocalStorage {
+
   constructor() {}
 
   getManagerIsActive() {
@@ -17,3 +18,5 @@ export default class LocalStorage {
     );
   }
 }
+
+
