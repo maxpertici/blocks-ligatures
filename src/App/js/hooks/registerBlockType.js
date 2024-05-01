@@ -9,7 +9,7 @@ function addAttributes(settings) {
   const ligaturesAttributes = {
     ligatures: {
       type: "array",
-      default: ["debug-ligature-attribute"],
+      default: [],
     },
   };
 

@@ -15,7 +15,7 @@ Text Domain:  blocks-ligatures
 
 defined( 'ABSPATH' ) or die();
 
-use MXP\BlocksLigatures\Core\App;
+use MXP\BlocksLigatures\App;
 
 $loader = require __DIR__ . '/vendor/autoload.php';
 
@@ -47,6 +47,6 @@ $App->load();
         'pattern' => [ 'core/paragraph', 'core/paragraph', 'core/paragraph'  ]
     ];
 
-    mxp_register_blocks_ligatures( [ $image, $paragrah ] );
+    mxp_blocks_ligatures_register_ligatures( [ $image, $paragrah ] );
 
  });

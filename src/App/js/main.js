@@ -6,7 +6,7 @@ import { App } from "./components/App.js";
 import { Toggle } from "./components/Toggle.js"
 import "../sass/main.scss";
 
-import { waitingDependencies, waitingElement } from "./components/Utils.js";
+import { waitingDependencies, waitingElement } from "./functions/waiting.js";
 
 domReady(async () => {
   

@@ -2,9 +2,11 @@
   "name": "maxpertici/blocks-ligatures",
   "require-dev": {},
   "autoload": {
-    "files": ["MXP/includes.php"],
+    "files": [
+      "src/Functions/ligatures.php"
+    ],
     "psr-4": {
-      "MXP\\BlocksLigatures\\": "MXP/"
+      "MXP\\BlocksLigatures\\": "src/Core/"
     }
   }
 }

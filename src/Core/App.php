@@ -1,6 +1,6 @@
 <?php
 
-namespace MXP\BlocksLigatures\Core;
+namespace MXP\BlocksLigatures;
 
 final class App extends Plugin {
 

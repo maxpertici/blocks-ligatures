@@ -1,8 +1,13 @@
 <?php
 
 
-
-function mxp_register_blocks_ligatures( $ligatures = [] ){
+/**
+ * Use to Register Block's Ligatures
+ *
+ * @param array $ligatures
+ * @return void
+ */
+function mxp_blocks_ligatures_register_ligatures( $ligatures = [] ){
 
     if( ! is_array( $ligatures ) || $ligatures === [] ) return ;
     
