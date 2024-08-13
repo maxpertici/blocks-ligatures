@@ -1,5 +1,5 @@
 
-import BlockWalker from '../others/BlockWalker.js' ;
+import EditorBlocksWalker from '../others/EditorBlocksWalker.js' ;
 
 /**
  * Parse the ligatures in the editor blocks and validate them against the ligatures collection.
@@ -7,11 +7,10 @@ import BlockWalker from '../others/BlockWalker.js' ;
  * @param {*} LigaturesCollection 
  * @returns 
  */
-const parseLigatures = ( editorBlocks, LigaturesCollection ) => {
+const parseBlocks = ( editorBlocks, LigaturesCollection ) => {
 
-    console.log( 'parseLigatures' ) ;
+    const walker = new EditorBlocksWalker();
 
-    const walker = new BlockWalker();
     walker.setLigatures( LigaturesCollection ) ;
     walker.setBlockList( editorBlocks );
     walker.walk();
@@ -21,7 +20,7 @@ const parseLigatures = ( editorBlocks, LigaturesCollection ) => {
 
 
 /**
- * Parse the blocks and create the capacities of each block.
+ * Parse the ligatures and create the capacities of each block.
  * Each block will have a set of capacities.
  * The capacities are the ligatures that are available on the block.
  * Each block can check and compare the capacities of the ligatures.
@@ -29,38 +28,31 @@ const parseLigatures = ( editorBlocks, LigaturesCollection ) => {
  * @param {*} parsedLigatures 
  * @returns 
  */
-const parseBlocks =  ( editorBlocks, parsedLigatures ) => {
+const parseLigatures =  ( editorBlocks, parsedLigatures ) => {
 
     const blocksCapacities = {} ;
 
-    // unique ID for each ligature ?
-
     for( const block of editorBlocks ) {
 
-        const capacities = {} ;
+        const ligaturesByBlock = [] ;
 
-        // for each ligature in parsedLigatures
         for( const ligature of parsedLigatures ) {
 
+            let inScope = false ;
 
-            console.log( ligature);
-
-            /*
-            // if the ligature is available on the block
-            if( block.ligatures.includes( ligature.id ) ) {
-
-                // add the ligature to the capacities of the block
-                capacities[ ligature.id ] = true ;
+            if( block.clientId === ligature.blockStart || block.clientId === ligature.blockEnd || ligature.blockIn.includes( block.clientId ) ) {
+                inScope = true ;
             }
-            */
+            
+            true ? ligaturesByBlock.push( ligature ) : null ;
         }
 
         // add the capacities of the block to the blocksCapacities
-        blocksCapacities[ block.id ] = capacities ;
+        blocksCapacities[ block.clientId ] = ligaturesByBlock ;
     }
 
     return blocksCapacities ;
 }
 
 
-export { parseLigatures, parseBlocks }
+export { parseBlocks, parseLigatures }

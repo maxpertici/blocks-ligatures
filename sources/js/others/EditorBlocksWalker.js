@@ -1,7 +1,8 @@
 
 import { LigaturesScope } from "./SignalsPrimitives.js";
+import { getHash } from "../functions/encode.js";
 
-export default class BlockWalker {
+export default class EditorBlocksWalker {
 
     constructor(){
 
@@ -37,7 +38,7 @@ export default class BlockWalker {
         let blocksTotal = Object.entries( this.blockList );
         this.blocksTotal = blocksTotal.length ;
 
-        this.parseBlocks();
+        this.parseLigatures();
 
         // À ce niveau, on a les ligatures dans this.selectedLigatures :D
     }
@@ -120,7 +121,7 @@ export default class BlockWalker {
     /**
      * Parse les blocks
      */
-    parseBlocks(){
+    parseLigatures(){
 
         let theFirstBlocks    = this.firstBlocks ;
         let theBlocksTotal    = this.blocksTotal ;
@@ -166,10 +167,12 @@ export default class BlockWalker {
                 legitLigatures.push( obj ) ;
             });
 
-            this.checkLigaturesOnBlock( currentBlock, legitLigatures );
+            this.checkLigaturesOnBlock( currentBlock, legitLigatures, index );
         });
 
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
         // À ce niveau, on a les ligatures dans this.selectedLigatures :D
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     }
 
 
@@ -197,17 +200,13 @@ export default class BlockWalker {
 
 
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    /**
+     * 
+     * @param {*} currentBlock 
+     * @param {*} legitLigatures 
+     */
+    checkLigaturesOnBlock( currentBlock, legitLigatures, blockIndex ){
 
-
-    checkLigaturesOnBlock( currentBlock, legitLigatures ){
-
-
-
-        let ligaturesOK = [] ;
-
-        // console.log(legitLigatures);
 
         legitLigatures.forEach( ( obj, index ) => {
 
@@ -268,29 +267,20 @@ export default class BlockWalker {
 
             if( finish ){
 
-                ligaturesOK.push( the_ligature.slug )
+                // store
 
-                // store ::
-                // start, in, end
+                let data = {} ;
+                data.slug       = the_ligature.slug;
+                data.blockStart = BlockStart ;
+                data.blockIn    = BlockInList ;
+                data.blockEnd   = BlockEnd ;
+                data.hash       = getHash( the_ligature.slug + '-' +  blockIndex + '-' + index ) ;
 
-                let set = {} ;
-                set.ligature   = the_ligature.slug;
-                set.blockStart = BlockStart ;
-                set.blockIn    = BlockInList ;
-                set.blockEnd   = BlockEnd ;
-
-                // window.maxpertici.blockLigatures.store.ligatures.push( set ) ;
-                this.selectedLigatures.push( set ) ;
+                this.selectedLigatures.push( data ) ;
             }
-
-
 
         });
 
-        // console.log( ligaturesOK ) ;
-        // console.log( window.maxpertici.blockLigatures.store.ligatures );
-
     }
-
 
 }

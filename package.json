@@ -4,11 +4,14 @@
   "description": "",
   "license": "GPL-2.0-or-later",
   "scripts": {
-    "watch": "wp-scripts start ./src/App/blocks-ligatures.js --webpack-devtool=eval-source-map",
-    "build": "wp-scripts build ./src/App/blocks-ligatures.js --mode=production"
+    "watch": "wp-scripts start ./sources/blocks-ligatures.js --webpack-devtool=eval-source-map",
+    "build": "wp-scripts build ./sources/blocks-ligatures.js --mode=production"
   },
   "devDependencies": {
     "@preact/signals-react": "^2.0.1",
     "@wordpress/scripts": "^27.6.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
   }
 }

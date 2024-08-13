@@ -20,6 +20,21 @@ const LigaturesManager = (props) => {
     }  
 	});
 
+
+  // console.log( editorBlocks ) ;
+
+  const clientIdCollection =  editorBlocks.map( (block) => {
+    return block.clientId;
+  } );
+
+  const memoClientIdCollection = useMemo(
+    () => {
+      // console.log(clientIdCollection);
+      return clientIdCollection ;
+    },
+    [ clientIdCollection ]
+  );
+
   /**
    * Handle Collection & dispatch
    */
@@ -33,9 +48,23 @@ const LigaturesManager = (props) => {
     [ LigaturesCollection.value]
   );
 
+
+  // console.log(memoLigaturesCollection);
+  // console.log(memoClientIdCollection);
+
+  // useEffect(() => {
+  //   console.log('ligaturesManager : useEffect');
+  //   dispatchCollection( memoEditorBlocks, memoLigaturesCollection );
+  // }, [memoLigaturesCollection, memoClientIdCollection]);
+
   useEffect(() => {
+
+    if( memoClientIdCollection.toString() != clientIdCollection.toString() ){
+      console.log('update ids');
+    }
+    console.log('ligaturesManager : useEffect');
     dispatchCollection( memoEditorBlocks, memoLigaturesCollection );
-  }, [memoEditorBlocks, memoLigaturesCollection]);
+  }, [memoLigaturesCollection, memoClientIdCollection]);
 
 
   /**

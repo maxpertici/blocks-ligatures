@@ -3,10 +3,10 @@
   "require-dev": {},
   "autoload": {
     "files": [
-      "src/Functions/ligatures.php"
+      "functions/ligatures.php"
     ],
     "psr-4": {
-      "MXP\\BlocksLigatures\\": "src/Core/"
+      "MXP\\BlocksLigatures\\": "core/"
     }
   }
 }

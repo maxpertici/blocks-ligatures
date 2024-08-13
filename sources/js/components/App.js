@@ -11,6 +11,8 @@ const App = () => {
     []
   );
 
+  // console.log(editorBlocks);
+
 
   return (
     <>

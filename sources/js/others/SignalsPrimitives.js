@@ -13,9 +13,12 @@ const LigaturesScope = signal([]);
 
 const blocksCapacities = signal({});
 
+const hardRefresh = signal(0);
+
 export {
   ManagerIsActive,
   LigaturesCollection,
   LigaturesScope,
   blocksCapacities,
+  hardRefresh
 };

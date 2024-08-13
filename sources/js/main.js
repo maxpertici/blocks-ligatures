@@ -7,6 +7,7 @@ import { Toggle } from "./components/Toggle.js"
 import "../sass/main.scss";
 
 import { waitingDependencies, waitingElement } from "./functions/waiting.js";
+import Editor from './others/Editor.js';
 
 domReady(async () => {
   
@@ -40,13 +41,13 @@ domReady(async () => {
 
   // Toggle
   // Waiting the right moment
-  await waitingElement(".edit-post-header__center");
+  await waitingElement(".editor-document-tools__left");
   
   // Create Toggle Root
   const toggleDiv = document.createElement("div");
   toggleDiv.id = "blocks-ligatures-toggle-root";
 
-  const editPostCenter = document.querySelector('.edit-post-header__center');
+  const editPostCenter = document.querySelector('.editor-document-tools__left');
   const ToggleRoot = editPostCenter.appendChild(toggleDiv);
 
   let RootToggle = null;
@@ -61,5 +62,9 @@ domReady(async () => {
     ReactDOM.render(React.createElement(Toggle), ToggleRoot);
     RootToggle = document.querySelector("#blocks-ligatures-toggle-root");
   }
+
+  	// Save RootApp !
+  let canvas = new Editor();
+	canvas.keepChildAlive( '.editor-document-tools__left', ToggleRoot ) ;
 
 });

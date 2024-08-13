@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Use to Register Block's Ligatures
  *
