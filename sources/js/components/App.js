@@ -18,6 +18,7 @@ const App = () => {
 
   Debug( { "editorBlocks" : editorBlocks } );
 
+
   return (
     <>
       <LigaturesManager editorBlocks={editorBlocks} />
