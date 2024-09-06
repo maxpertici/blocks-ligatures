@@ -1,5 +1,5 @@
 
-import EditorBlocksWalker from '../others/EditorBlocksWalker.js' ;
+import EditorBlocksWalker from '../helpers/EditorBlocksWalker.js' ;
 
 /**
  * Parse the ligatures in the editor blocks and validate them against the ligatures collection.

@@ -1,9 +1,9 @@
 
 import { __ } from '@wordpress/i18n';
 
-import { ManagerIsActive } from "../others/SignalsPrimitives.js";
+import { ManagerIsActive } from "../signals/SignalsPrimitives.js";
 import { effect } from "@preact/signals-react";
-import localStorage from "../others/LocalStorage.js";
+import localStorage from "../helpers/LocalStorage.js";
 
 const Toggle = ( props ) => {
 

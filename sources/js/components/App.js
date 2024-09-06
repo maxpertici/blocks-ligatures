@@ -1,22 +1,27 @@
 
 import { useSelect, useDispatch } from "@wordpress/data";
-import { LigaturesManager } from "./LigaturesManager.js";
+import {useEffect, useState, useMemo} from 'react';
+import { LigaturesManager } from "./Manager/Manager.js";
+import { ManagerIsActive, LigaturesCollection, blocksCapacities } from "../signals/SignalsPrimitives.js";
+import { effect } from "@preact/signals-react";
+import Debug from '../helpers/Debug.js';
+import { BlocksControls } from "./Block/BlocksControls.js";
 
 const App = () => {
 
   const { editorBlocks } = useSelect(
     (select) => ({
-      editorBlocks: select("core/editor").getEditorBlocks(),
+      editorBlocks: select("core/editor").getEditorBlocks()
     }),
     []
   );
 
-  // console.log(editorBlocks);
-
+  Debug( { "editorBlocks" : editorBlocks } );
 
   return (
     <>
       <LigaturesManager editorBlocks={editorBlocks} />
+      <BlocksControls editorBlocks={editorBlocks}/>
     </>
   );
 };

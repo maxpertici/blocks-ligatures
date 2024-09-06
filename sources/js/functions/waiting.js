@@ -26,7 +26,7 @@ const waitingDependencies = (dependencies = []) => {
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     (function loop(i) {
-      // console.log( dependencies ) ;
+
       if (dependencies.every((dep) => window.hasOwnProperty(dep))) {
         resolve(true);
         return;

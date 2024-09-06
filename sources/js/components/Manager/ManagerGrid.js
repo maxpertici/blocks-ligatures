@@ -1,4 +1,4 @@
-import { LigaturesCollection } from "../others/SignalsPrimitives.js";
+import { LigaturesCollection } from "../../signals/SignalsPrimitives.js";
 
 const LigaturesGrid = (props) => {
   

@@ -1,6 +1,7 @@
 
-import { LigaturesScope } from "./SignalsPrimitives.js";
+import { LigaturesScope } from "../signals/SignalsPrimitives.js";
 import { getHash } from "../functions/encode.js";
+import Debug from "./Debug.js";
 
 export default class EditorBlocksWalker {
 
@@ -108,7 +109,7 @@ export default class EditorBlocksWalker {
             this.blocksCount = theUpdatedBlockCount ;
         });
 
-        // console.log(theUpdatedBlockCount);
+        // Debug( theUpdatedBlockCount );
         // this.blocksCount = theUpdatedBlockCount ;
 
         if( this.maxBlocksCount < theMaxBlocksCount ){
@@ -158,7 +159,7 @@ export default class EditorBlocksWalker {
 
             const blocksCountArray = Object.entries( theBlocksCount );
 
-            // console.log(blocksCountArray);
+            // Debug( blocksCountArray );
 
 
             blocksCountArray.forEach( function( obj, index ){
@@ -210,7 +211,6 @@ export default class EditorBlocksWalker {
 
         legitLigatures.forEach( ( obj, index ) => {
 
-            // console.log( obj.length );
             let the_ligature = this.getLigatureObject( obj[0] ) ;
             let the_pattern = the_ligature.pattern ;
 
@@ -274,8 +274,7 @@ export default class EditorBlocksWalker {
                 data.blockStart = BlockStart ;
                 data.blockIn    = BlockInList ;
                 data.blockEnd   = BlockEnd ;
-                data.hash       = getHash( the_ligature.slug + '-' +  blockIndex + '-' + index ) ;
-
+                
                 this.selectedLigatures.push( data ) ;
             }
 

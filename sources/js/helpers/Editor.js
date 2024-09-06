@@ -1,4 +1,6 @@
 
+import Debug from './Debug.js' ;
+
 export default class Editor {
 
 	constructor(){}
@@ -15,7 +17,7 @@ export default class Editor {
 
 		setInterval( () => {
 
-			// console.log('keepChildAlive');
+			Debug( 'keepChildAlive' );
 
 			let child = null ;
 			let parent = document.querySelector( parentSelector ) ;

@@ -1,10 +1,7 @@
-import { blocksCapacities } from "../others/SignalsPrimitives.js";
+import { blocksCapacities } from "../signals/SignalsPrimitives.js";
 import { parseBlocks, parseLigatures } from "./parse.js";
 
 const dispatchCollection = ( editorBlocks, LigaturesCollection ) => {
-    
-
-    // console.log('dispatchCollection');
 
     const parsedLigatures = parseBlocks( editorBlocks, LigaturesCollection ) ;
 

@@ -7,7 +7,7 @@ import { Toggle } from "./components/Toggle.js"
 import "../sass/main.scss";
 
 import { waitingDependencies, waitingElement } from "./functions/waiting.js";
-import Editor from './others/Editor.js';
+import Editor from './helpers/Editor.js';
 
 domReady(async () => {
   
@@ -30,7 +30,7 @@ domReady(async () => {
 
   // createRoot for React 18+
   if (18 <= parseInt(React.version.split(".")[0])) {
-    const { createRoot } = window.ReactDOM;
+    const { createRoot } = window.wp.element;
     const root = createRoot(AppRoot);
     root.render(React.createElement(App));
     RootApp = document.querySelector("#blocks-ligatures-app-root");
@@ -54,7 +54,7 @@ domReady(async () => {
 
   // createRoot for React 18+
   if (18 <= parseInt(React.version.split(".")[0])) {
-    const { createRoot } = window.ReactDOM;
+    const { createRoot } = window.wp.element;
     const root = createRoot(ToggleRoot);
     root.render(React.createElement(Toggle));
     RootToggle = document.querySelector("#blocks-ligatures-toggle-root");
@@ -63,7 +63,7 @@ domReady(async () => {
     RootToggle = document.querySelector("#blocks-ligatures-toggle-root");
   }
 
-  	// Save RootApp !
+  // Save RootApp !
   let canvas = new Editor();
 	canvas.keepChildAlive( '.editor-document-tools__left', ToggleRoot ) ;
 
