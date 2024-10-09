@@ -7,6 +7,7 @@ class Plugin {
 	public $version = '' ;
 	protected $pluginUrl = null ;
 	protected $directoryPath = null ;
+	
 	function __construct( $mainPluginFilePath = null ){
 
 		if( is_null( $mainPluginFilePath ) ){ return ; }

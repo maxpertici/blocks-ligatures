@@ -1,28 +1,28 @@
 import { LigaturesGrid } from "./ManagerGrid.js";
-
-import {useEffect, useState, useMemo} from 'react';
-import { ManagerIsActive, LigaturesCollection, blocksCapacities } from "../../signals/SignalsPrimitives.js";
-import { effect } from "@preact/signals-react";
+import { useEffect, useState, useMemo } from 'react';
 import { dispatchCollection } from "../../functions/dispatch.js";
 import { concatBlocksClientID } from "../../functions/editor.js"
-import Debug from '../../helpers/Debug.js';
+
+import { useBLStore } from "../../helpers/Store.js";
 
 const LigaturesManager = (props) => {
 
   const { editorBlocks } = props ;
 
+  const ManagerIsActive     = useBLStore((state) => state.ManagerIsActive)
+  const LigaturesCollection = useBLStore((state) => state.LigaturesCollection)
+
   /**
    * Handle Active State
    */
-  const [ isActive, setIsActive ] = useState( ManagerIsActive.value ) ;
+  const [ isActive, setIsActive ] = useState( ManagerIsActive ) ;
   const [ concatEditorBlocksClientID, setConcatEditorBlocksClientID ] = useState( concatBlocksClientID(editorBlocks) );
-
-  effect(() => {
-    if( ManagerIsActive.value != isActive ){
-      setIsActive( ManagerIsActive.value ) ;
+ 
+  useEffect(() => {
+    if (ManagerIsActive !== isActive) {
+      setIsActive(ManagerIsActive);
     }
-	});
-  
+  }, [ ManagerIsActive ]);
 
   // Debug( blocksCapacities.value );
 
@@ -34,7 +34,7 @@ const LigaturesManager = (props) => {
     if( concatBlocksClientID(editorBlocks) != concatEditorBlocksClientID ){
 
       setConcatEditorBlocksClientID( concatBlocksClientID(editorBlocks) );
-      dispatchCollection( editorBlocks, LigaturesCollection.value );
+      dispatchCollection( editorBlocks, LigaturesCollection );
     }
     
   }, [editorBlocks]);

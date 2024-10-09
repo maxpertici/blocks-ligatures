@@ -2,7 +2,7 @@
 
 const concatBlocksClientID = ( editorBlocks ) => {
 
-    let s = 'concat-client-id';
+    let s = 'concat-clients-id';
     editorBlocks.forEach( block => {
         s += '--' + block.clientId ;
     });

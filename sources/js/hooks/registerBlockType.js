@@ -6,6 +6,7 @@ import { addFilter } from "@wordpress/hooks";
  * @param {Object} settings
  */
 function addAttributes(settings) {
+  
   const ligaturesAttributes = {
     ligatures: {
       type: "array",

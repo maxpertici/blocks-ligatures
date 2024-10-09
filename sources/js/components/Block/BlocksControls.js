@@ -1,33 +1,41 @@
 
-import Debug from '../../helpers/Debug.js';
 import { BlockLigaturesToolBar } from './BlockToolBar.js';
-import { ManagerIsActive, blocksCapacities } from "../../signals/SignalsPrimitives.js";
-import {useEffect, useState, useMemo} from 'react';
-import { effect } from "@preact/signals-react";
+import { useEffect, useState, useMemo } from 'react';
+import { useBLStore } from '../../helpers/Store.js';
 
 const BlocksControls = (props) => {
 
-    const { editorBlocks } = props ;
+  const { editorBlocks } = props ;
 
+  const ManagerIsActive  = useBLStore( ( state ) => state.ManagerIsActive  )
+  const BlocksPositions  = useBLStore( ( state ) => state.BlocksPositions  )
+  const BlocksCapacities = useBLStore( ( state ) => state.BlocksCapacities )
 
   /**
    * Handle Active State
    */
-  const [ isActive, setIsActive ] = useState( ManagerIsActive.value ) ;
+  const [ isActive, setIsActive   ] = useState( ManagerIsActive ) ;
+  const [ positions, setPositions ] = useState( BlocksPositions ) ;
 
-  effect(() => {
-    if( ManagerIsActive.value != isActive ){
-      setIsActive( ManagerIsActive.value ) ;
+  useEffect(() => {
+
+    if( ManagerIsActive != isActive ){
+      setIsActive( ManagerIsActive ) ;
     }
-  });
 
-    return <>
+    if( BlocksPositions != positions ){
+      setPositions( BlocksPositions ) ;
+    }
+  }, [ ManagerIsActive, BlocksPositions ]);
+
+  return <>
     { isActive && editorBlocks.map((block) => (
-        <div className="blocks-ligatures-blocks-controls">
-            <BlockLigaturesToolBar editorBlocks={editorBlocks} clientId={block.clientId} availableLigatures={blocksCapacities.value[block.clientId] ?? {}} />
+        <div key={block.clientId} className="blocks-ligatures-blocks-controls">
+            <BlockLigaturesToolBar editorBlocks={editorBlocks} clientId={block.clientId} blockPosition={ BlocksPositions[block.clientId] ?? 0 } availableLigatures={ BlocksCapacities[block.clientId] ?? {} } />
         </div>
     ))}
-    </>;
+  </>;
+
 };
 
 export { BlocksControls };

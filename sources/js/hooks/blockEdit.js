@@ -1,10 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { addFilter } from "@wordpress/hooks";
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { blocksCapacities } from "../signals/SignalsPrimitives.js";
-import { effect } from "@preact/signals-react";
 import { useEffect, useState, useMemo} from 'react';
-import { useSelect, useDispatch } from "@wordpress/data";
 
 const handleLigaturesAttributes = createHigherOrderComponent( (BlockEdit) => {
 

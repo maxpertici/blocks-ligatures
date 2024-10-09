@@ -1,22 +1,19 @@
-
-import { LigaturesScope } from "../signals/SignalsPrimitives.js";
-import { getHash } from "../functions/encode.js";
 import Debug from "./Debug.js";
 
 export default class EditorBlocksWalker {
 
     constructor(){
 
-        this.ligatures      = [] ;
-        this.blockList      = [] ;
+        this.ligatures         = [] ;
+        this.blockList         = [] ;
 
-        this.isReadyToParse = false ;
-        this.firstBlocks    = [] ;
-        this.blocksCount    = {} ;
-        this.maxBlocksCount =  0 ;
-        this.blocksTotal    =  0 ;
+        this.isReadyToParse    = false ;
+        this.firstBlocks       = [] ;
+        this.blocksCount       = {} ;
+        this.maxBlocksCount    =  0 ;
+        this.blocksTotal       =  0 ;
 
-        this.blockMatrix    = {} ;
+        this.blockMatrix       = {} ;
 
         this.selectedLigatures = [] ;
 

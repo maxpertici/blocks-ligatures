@@ -1,24 +1,26 @@
 
 import { __ } from '@wordpress/i18n';
-
-import { ManagerIsActive } from "../signals/SignalsPrimitives.js";
-import { effect } from "@preact/signals-react";
+import {useEffect, useState, useMemo} from 'react';
 import localStorage from "../helpers/LocalStorage.js";
+
+import { useBLStore } from "../helpers/Store.js";
 
 const Toggle = ( props ) => {
 
     const storage = new localStorage();
+    const ManagerIsActive = useBLStore((state) => state.ManagerIsActive)
 
-    effect( () => {
-        storage.setManagerIsActive( ManagerIsActive.value );
-    });
+    useEffect(() => {
+        storage.setManagerIsActive( ManagerIsActive );
+      }, [ ManagerIsActive ]);
 
+    const setManagerIsActive = useBLStore((state) => state.setManagerIsActive)
     return (
         <>
             <button className='blocks-ligatures-toggle' onClick={()=>{
-                ManagerIsActive.value = ! ManagerIsActive.value ;
+                setManagerIsActive(!ManagerIsActive);
             }}>
-                { __( 'Toggle Ligature\'s Manager', 'blocks-ligatures') }
+                { __( "Toggle Ligature's Manager", 'blocks-ligatures') }
             </button>
         </>
     );

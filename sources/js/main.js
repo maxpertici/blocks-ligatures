@@ -8,11 +8,12 @@ import "../sass/main.scss";
 
 import { waitingDependencies, waitingElement } from "./functions/waiting.js";
 import Editor from './helpers/Editor.js';
+import { createRoot } from "react-dom/client";
 
 domReady(async () => {
   
   // Waiting js dependencies
-  await waitingDependencies(["React", "ReactDOM"]);
+  await waitingDependencies( ["React", "ReactDOM"] );
   const React = window.React;
 
   // App
@@ -30,12 +31,12 @@ domReady(async () => {
 
   // createRoot for React 18+
   if (18 <= parseInt(React.version.split(".")[0])) {
-    const { createRoot } = window.wp.element;
+
     const root = createRoot(AppRoot);
     root.render(React.createElement(App));
     RootApp = document.querySelector("#blocks-ligatures-app-root");
   } else {
-    ReactDOM.render(React.createElement(App), AppRoot);
+    window.ReactDOM.render(React.createElement(App), AppRoot);
     RootApp = document.querySelector("#blocks-ligatures-app-root");
   }
 
@@ -54,12 +55,12 @@ domReady(async () => {
 
   // createRoot for React 18+
   if (18 <= parseInt(React.version.split(".")[0])) {
-    const { createRoot } = window.wp.element;
+
     const root = createRoot(ToggleRoot);
     root.render(React.createElement(Toggle));
     RootToggle = document.querySelector("#blocks-ligatures-toggle-root");
   } else {
-    ReactDOM.render(React.createElement(Toggle), ToggleRoot);
+    window.ReactDOM.render(React.createElement(Toggle), ToggleRoot);
     RootToggle = document.querySelector("#blocks-ligatures-toggle-root");
   }
 

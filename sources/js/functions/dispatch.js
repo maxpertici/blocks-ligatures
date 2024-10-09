@@ -1,13 +1,14 @@
-import { blocksCapacities } from "../signals/SignalsPrimitives.js";
+import { useBLStore } from "../helpers/Store.js";
 import { parseBlocks, parseLigatures } from "./parse.js";
 
 const dispatchCollection = ( editorBlocks, LigaturesCollection ) => {
 
     const parsedLigatures = parseBlocks( editorBlocks, LigaturesCollection ) ;
 
-    const capacities = parseLigatures( editorBlocks, parsedLigatures );
+    const state = useBLStore.getState();
 
-    blocksCapacities.value = capacities ;
+    const capacities = parseLigatures( editorBlocks, parsedLigatures );
+    state.setBlocksCapacities(capacities);
 }
 
 export { dispatchCollection };
