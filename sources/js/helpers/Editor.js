@@ -124,6 +124,17 @@ export default class Editor {
 		return false ;
 	}
 
+
+	/**
+	 * Observe the title of the post editor
+	 * used to retrieve the title box size and ajdust the block commands postions in the editor
+	 */
+	observePostEditorTitle(){
+		
+
+	}
+
+
 	/**
 	 * Bind Scroll Event to the blocks watch
 	 */
@@ -157,11 +168,25 @@ export default class Editor {
 
 		if( ! scrollRefDom ){ return ; }
 
-		// @TODO : use the scrol value for Y translation, not for the position : => computed positions with this translation
-		scrollRefDom.addEventListener( 'scroll', () => {
+		// @TODO : use the scroll value for Y translation, not for the position : => computed positions with this translation
+		scrollRefDom.addEventListener( 'scroll', (e) => handleScroll(e, scrollRefDom) );
+
+		const handleScroll = (e, scrollRefDom) => {
+
+			// https://developer.mozilla.org/en-US/docs/Web/API/HTMLDocument
+			// https://developer.mozilla.org/en-US/docs/Web/API/Document
+			// scrollRefDom = HTMLDocument => Document
+			const scrollElm = scrollRefDom.scrollingElement;
+			const scrollTop = scrollElm.scrollTop;
+
 			const positions = this.getBlocksPositions();
-			this.dispatchPositions( positions );
-		});
+
+			Object.keys(positions).forEach((key) => {
+				Object.assign(positions[key], { scrollTop: scrollTop });
+			});
+
+			this.dispatchPositions(positions);
+		};
 
 		const resizeObserver = new ResizeObserver( () => {
 			const positions = this.getBlocksPositions();

@@ -11,10 +11,10 @@ import Editor from './helpers/Editor.js';
 import { createRoot } from "react-dom/client";
 
 domReady(async () => {
-  
+
   // Waiting js dependencies
-  await waitingDependencies( ["React", "ReactDOM"] );
-  const React = window.React;
+  await waitingDependencies( [ "React", "ReactDOM" ] );
+  const React = window.React ;
 
   // App
   // Waiting the right moment

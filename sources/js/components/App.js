@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <>
-      <LigaturesManager editorBlocks={editorBlocks} />
+      {/* <LigaturesManager editorBlocks={editorBlocks} /> */}
       <BlocksControls editorBlocks={editorBlocks}/>
     </>
   );

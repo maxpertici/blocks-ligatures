@@ -30,8 +30,9 @@ const BlockLigaturesToolBar = (props) => {
 
   const styles = {
     block : {
-      left : blockPosition.x ,
-      top  : blockPosition.y  
+      left      : blockPosition.x ,
+      top       : blockPosition.y ,
+      transform : `translate( 0px, ${ ( -1 * blockPosition.scrollTop ) }px)`
     }
   }
 
