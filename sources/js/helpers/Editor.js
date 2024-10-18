@@ -1,6 +1,5 @@
 
 import { useBLStore } from "./Store.js";
-import Debug from './Debug.js' ;
 
 export default class Editor {
 
@@ -90,7 +89,6 @@ export default class Editor {
 
 		setInterval( () => {
 
-			Debug( 'keepChildAlive' );
 
 			let child = null ;
 			let parent = document.querySelector( parentSelector ) ;
@@ -106,6 +104,29 @@ export default class Editor {
 
 	}
 
+	/**
+	 * Retrieve the translation of a block in the editor
+	 * 
+	 * @param {*} clientId 
+	 * @returns 
+	 */
+	getBlockScroll( clientId, scrollTop ){
+
+		console.log( 'getBlockScroll : ' + clientId );
+
+		const domBlock = this.domBody().querySelector( '#block-' + clientId )  ;
+
+		console.log( 'domBlock : ' + domBlock );
+
+		if (domBlock) {
+			console.log( "scrollTop : " + scrollTop );
+			return { "scrollTop" : scrollTop } ;
+		}
+
+		return null ;
+	}
+
+
 
 	/**
 	 * Retrieve the position of a block in the editor
@@ -115,24 +136,20 @@ export default class Editor {
 	 */
 	getBlockPosition( clientId ){
 
+		console.log( 'getBlockPosition : ' + clientId );
+
 		const domBlock = this.domBody().querySelector( '#block-' + clientId )  ;
 
+		console.log( 'domBlock : ' + domBlock );
+
 		if (domBlock) {
+			console.log( "x : " + domBlock.offsetLeft + ", y : " + domBlock.offsetTop );
 			return { "x" : domBlock.offsetLeft, "y" : domBlock.offsetTop } ;
 		}
 
-		return false ;
+		return null ;
 	}
 
-
-	/**
-	 * Observe the title of the post editor
-	 * used to retrieve the title box size and ajdust the block commands postions in the editor
-	 */
-	observePostEditorTitle(){
-		
-
-	}
 
 
 	/**
@@ -140,20 +157,16 @@ export default class Editor {
 	 */
 	bindScreenForBlocksWatch(){
 
-		Debug( "bindScreenForBlocksWatch" );
 
 		const state = useBLStore.getState();
 		
-		Debug( { "editorHelperScreenIsRunning" : state.EditorHelperScreenIsRunning } );
-		if( state.EditorHelperScreenIsRunning ){ return ; }
+		if( state.EditorScreenIsRunning ){ return ; }
 
 		const domBody = this.domBody() ;
 
-		Debug( { "domBody" : domBody } );
 
 		if( ! domBody ){ return ; }
 
-		Debug( { "isPostEditorIframe" : this.isPostEditorIframe() } );
 
 		let scrollRefDom = null ;
 
@@ -179,25 +192,56 @@ export default class Editor {
 			const scrollElm = scrollRefDom.scrollingElement;
 			const scrollTop = scrollElm.scrollTop;
 
-			const positions = this.getBlocksPositions();
+			const scrolls = this.getBlocksScrolls( scrollTop );
 
-			Object.keys(positions).forEach((key) => {
-				Object.assign(positions[key], { scrollTop: scrollTop });
-			});
-
-			this.dispatchPositions(positions);
+			this.dispatchScrolls(scrolls);
 		};
 
-		const resizeObserver = new ResizeObserver( () => {
+		const mutationObserver = new MutationObserver((mutationsList) => {
+			console.log('mutationObserver');
+		
 			const positions = this.getBlocksPositions();
 			this.dispatchPositions(positions);
 		});
+		
+		mutationObserver.observe(domBody, { attributes: true, childList: true, subtree: true });
 
-		resizeObserver.observe(domBody);
+		/**
+		 * Observe the title of the post editor
+		 * used to retrieve the title box size and ajdust the block commands postions in the editor
+		 */
+		const rootSpacingTop = new MutationObserver((mutationsList) => {
+			for (const mutation of mutationsList) {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+					const rootContainer = domBody.querySelector('.is-root-container');
+					const offsetTop = rootContainer.offsetTop;
+		
+					const postTitleWrapper = domBody.querySelector('.edit-post-visual-editor__post-title-wrapper');
+					const marginTop = window.getComputedStyle(postTitleWrapper).marginTop;
+		
+					const computedMarginTop = parseInt(marginTop.replace('px', ''));
+					const top = offsetTop + computedMarginTop;
+		
+					state.setEditorLayoutRootTop(top);
+				}
+			}
+		});
+		
+		rootSpacingTop.observe(domBody, { attributes: true, childList: true, subtree: true });
 
-		state.setEditorHelperScreenIsRunning(true);
+		state.setEditorScreenIsRunning(true);
+
 	}
 
+	/**
+	 * Dispatch the tranlsations of the blocks from the editor into signals
+	 * @param {*} positions 
+	 */
+	dispatchScrolls( scrolls ){
+		
+		const state = useBLStore.getState();
+		state.setBlocksScrolls(scrolls);
+	}
 
 	/**
 	 * Dispatch the positions of the blocks from the editor into signals
@@ -218,9 +262,46 @@ export default class Editor {
 
 		const state = useBLStore.getState();
 		
-		let blocks = state.EditorHelperBlocks ;
-		blocks.push( block ) ;
-		state.setEditorHelperBlocks(blocks);
+		let blocks = state.EditorBlocks ;
+		
+		if( ! blocks.includes( block ) ){
+			blocks.push( block ) ;
+		} 
+
+		state.setEditorBlocks(blocks);
+	}
+
+
+	/**
+	 * Retrieve the scrolls of all the blocks in the editor
+	 * 
+	 * @returns object[]
+	 */
+	getBlocksScrolls( scrollTop ){
+
+		let scrolls = {} ;
+		let blockMissing = [] ;
+		
+		const state = useBLStore.getState();
+		let blocks = state.EditorBlocks ;
+
+		// console.log( blocks );
+
+		blocks.forEach( clientId => {
+
+			const result = this.getBlockScroll( clientId, scrollTop );
+			// console.log( result );
+
+			if( false != result ){
+				scrolls[clientId] = result ;
+			}else{
+				blockMissing.push( clientId );
+			}
+		});
+
+		console.log( state.EditorBlocks );
+
+		return scrolls ;
 	}
 
 	/**
@@ -234,7 +315,9 @@ export default class Editor {
 		let blockMissing = [] ;
 		
 		const state = useBLStore.getState();
-		let blocks = state.EditorHelperBlocks ;
+		let blocks = state.EditorBlocks ;
+
+		// console.log( blocks );
 
 		blocks.forEach( clientId => {
 
@@ -248,8 +331,19 @@ export default class Editor {
 			}
 		});
 
+		// on the first load, all clientId are reset, so if blockMissing is the same as blocks, force a new retrieve of the blocks clientId
+		// so, trigger a refresh in order to force a new retrieve of the blocks clientId
+		// if( blockMissing.length == blocks.length ){
+		// 	const event = new Event('mxpBL__App__forceUpdate');
+  		// 	window.dispatchEvent(event);
+		// }
+
+
+		// console.log(  blocks.filter( clientId => ! blockMissing.includes( clientId ) ) );
+
 		// clean up the watch list
-		state.setEditorHelperBlocks( blocks.filter( clientId => ! blockMissing.includes( clientId ) ) );
+		// state.setEditorBlocks( blocks.filter( clientId => ! blockMissing.includes( clientId ) ) );
+		console.log( state.EditorBlocks );
 
 		return positions ;
 	}

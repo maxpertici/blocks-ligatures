@@ -1,4 +1,4 @@
-import Debug from "./Debug.js";
+
 
 export default class EditorBlocksWalker {
 
@@ -106,7 +106,6 @@ export default class EditorBlocksWalker {
             this.blocksCount = theUpdatedBlockCount ;
         });
 
-        // Debug( theUpdatedBlockCount );
         // this.blocksCount = theUpdatedBlockCount ;
 
         if( this.maxBlocksCount < theMaxBlocksCount ){
@@ -156,7 +155,6 @@ export default class EditorBlocksWalker {
 
             const blocksCountArray = Object.entries( theBlocksCount );
 
-            // Debug( blocksCountArray );
 
 
             blocksCountArray.forEach( function( obj, index ){

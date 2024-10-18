@@ -24,7 +24,6 @@ const LigaturesManager = (props) => {
     }
   }, [ ManagerIsActive ]);
 
-  // Debug( blocksCapacities.value );
 
   /**
    * Dispatch Ligatures Collection on Editor Blocks change

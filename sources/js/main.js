@@ -1,5 +1,6 @@
 import "./hooks/registerBlockType.js";
 import "./hooks/blockEdit.js";
+import "./hooks/blockListBlock.js";
 
 import domReady from "@wordpress/dom-ready";
 import { App } from "./components/App.js";

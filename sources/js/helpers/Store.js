@@ -8,21 +8,25 @@ const storage = new LocalStorage();
 
 const useBLStore = create( (set) => ( {
 
-    ManagerIsActive                : storage.getManagerIsActive(),
-    LigaturesCollection            : window.blocksLigatures.collection,
-    LigaturesScope                 : [],
-    BlocksCapacities               : {},
-    BlocksPositions                : [],
-    EditorHelperScreenIsRunning    : false,
-    EditorHelperBlocks             : [],
+    ManagerIsActive          : storage.getManagerIsActive(),
+    LigaturesCollection      : window.blocksLigatures.collection,
+    LigaturesScope           : [],
+    BlocksCapacities         : {},
+    BlocksPositions          : [],
+    BlocksScrolls            : [],
+    EditorScreenIsRunning    : false,
+    EditorBlocks             : [],
+    EditorLayoutRootTop      : 0,
 
-    setManagerIsActive             : (value) => set( (state) => ( { ManagerIsActive             : value })),
-    setLigaturesCollection         : (value) => set( (state) => ( { LigaturesCollection         : value })),
-    setLigaturesScope              : (value) => set( (state) => ( { LigaturesScope              : value })),
-    setBlocksCapacities            : (value) => set( (state) => ( { BlocksCapacities            : value })),
-    setBlocksPositions             : (value) => set( (state) => ( { BlocksPositions             : value })),
-    setEditorHelperScreenIsRunning : (value) => set( (state) => ( { EditorHelperScreenIsRunning : value })),
-    setEditorHelperBlocks          : (value) => set( (state) => ( { EditorHelperBlocks          : value }))
+    setManagerIsActive       : (value) => set( (state) => ( { ManagerIsActive       : value })),
+    setLigaturesCollection   : (value) => set( (state) => ( { LigaturesCollection   : value })),
+    setLigaturesScope        : (value) => set( (state) => ( { LigaturesScope        : value })),
+    setBlocksCapacities      : (value) => set( (state) => ( { BlocksCapacities      : value })),
+    setBlocksPositions       : (value) => set( (state) => ( { BlocksPositions       : value })),
+    setBlocksScrolls         : (value) => set( (state) => ( { BlocksScrolls         : value })),
+    setEditorScreenIsRunning : (value) => set( (state) => ( { EditorScreenIsRunning : value })),
+    setEditorBlocks          : (value) => set( (state) => ( { EditorBlocks          : value })),
+    setEditorLayoutRootTop   : (value) => set( (state) => ( { EditorLayoutRootTop   : value }))
 }))
 
 export { useBLStore } ;
